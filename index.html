@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mundo em Duas Mochilas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,sans-serif;background:#f5f1ea;color:#2d2d2d;overflow-x:hidden}
+
+/* ── HEADER ── */
+header{
+  position:fixed;top:0;width:100%;
+  background:rgba(255,255,255,0.93);
+  backdrop-filter:blur(12px);
+  padding:0 40px;
+  height:64px;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:1000;
+  border-bottom:1px solid #e8e0d4;
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+
+.logo{
+  font-family:"Playfair Display",serif;
+  font-weight:700;font-size:1.15rem;
+  color:#2f3d2f;
+  text-decoration:none;
+  display:flex;align-items:center;gap:8px;
+}
+
+nav{display:flex;align-items:center;gap:0}
+nav a{
+  padding:0 1rem;height:64px;line-height:64px;
+  text-decoration:none;color:#555;
+  font-weight:500;font-size:.83rem;
+  letter-spacing:.04em;text-transform:uppercase;
+  transition:color .2s;
+}
+nav a:hover{color:#4f6b4f}
+
+.nav-cta{
+  background:#4f6b4f;color:white !important;
+  padding:.5rem 1.2rem !important;
+  border-radius:30px;height:auto !important;
+  line-height:normal !important;
+  font-size:.82rem !important;
+  margin-left:.5rem;
+  transition:background .2s !important;
+}
+.nav-cta:hover{background:#2f3d2f !important}
+
+/* ── HERO ── */
+.hero{
+  height:100vh;
+  background:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  display:flex;align-items:flex-end;
+  position:relative;
+  color:white;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(20,30,20,0.85) 0%, rgba(20,30,20,0.2) 60%, transparent 100%);
+}
+.hero-content{
+  position:relative;z-index:1;
+  padding:0 60px 80px;
+  max-width:780px;
+}
+.hero-tag{
+  display:inline-block;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);font-weight:500;
+  margin-bottom:1rem;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+.hero h1{
+  font-family:"Playfair Display",serif;
+  font-size:4.2rem;line-height:1.08;
+  margin-bottom:1rem;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+.hero h1 em{font-style:italic;color:#a8c5a0}
+.hero p{
+  font-size:1.05rem;font-weight:300;
+  color:rgba(255,255,255,.85);
+  line-height:1.7;margin-bottom:1.8rem;
+  max-width:480px;
+  opacity:0;animation:fadeUp .7s .6s forwards;
+}
+.hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .8s forwards}
+
+.btn{display:inline-block;padding:.8rem 1.8rem;border-radius:30px;text-decoration:none;font-weight:600;font-size:.88rem;transition:all .25s;cursor:pointer;border:none;font-family:Poppins,sans-serif}
+.btn-primary{background:#4f6b4f;color:white}
+.btn-primary:hover{background:#3a5039;transform:translateY(-2px)}
+.btn-secondary{background:rgba(255,255,255,.15);color:white;border:1.5px solid rgba(255,255,255,.5);backdrop-filter:blur(4px)}
+.btn-secondary:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+
+/* hero stats strip */
+.hero-stats{
+  position:absolute;bottom:0;right:0;
+  display:flex;z-index:2;
+}
+.hs{
+  padding:1.2rem 2rem;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+  border-left:1px solid rgba(255,255,255,.15);
+  text-align:center;
+}
+.hs-num{font-family:"Playfair Display",serif;font-size:1.6rem;color:white;display:block}
+.hs-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+/* ── QUEM SOMOS ── */
+.sobre{
+  display:grid;grid-template-columns:1fr 1fr;
+  max-width:1100px;margin:80px auto;
+  background:white;border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 40px rgba(0,0,0,0.06);
+}
+.sobre-img{
+  background:url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80') center/cover;
+  min-height:420px;
+}
+.sobre-content{
+  padding:3.5rem;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.section-tag{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#4f6b4f;font-weight:600;margin-bottom:.6rem}
+.section-title{font-family:"Playfair Display",serif;font-size:2rem;color:#2f3d2f;line-height:1.2;margin-bottom:1rem}
+.sobre-content p{font-size:.93rem;color:#666;line-height:1.85;font-weight:300;margin-bottom:.8rem}
+.sobre-links{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap}
+.rede{display:flex;align-items:center;gap:7px;padding:.5rem 1rem;border-radius:30px;font-size:.8rem;font-weight:500;text-decoration:none;border:1.5px solid;transition:all .2s}
+.rede-ig{color:#2f3d2f;border-color:#a8c5a0}
+.rede-ig:hover{background:#4f6b4f;color:white;border-color:#4f6b4f}
+.rede-wpp{color:#25D366;border-color:#25D366}
+.rede-wpp:hover{background:#25D366;color:white}
+
+/* ── SEÇÃO GENÉRICA ── */
+.secao{padding:80px 40px;max-width:1100px;margin:auto}
+.secao-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem}
+.ver-todos{color:#4f6b4f;text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid #a8c5a0;padding-bottom:2px;transition:color .2s}
+.ver-todos:hover{color:#2f3d2f}
+
+/* ── CARDS DESTINOS ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+
+.card{
+  background:white;border-radius:16px;overflow:hidden;
+  box-shadow:0 6px 24px rgba(0,0,0,0.07);
+  transition:.3s;text-decoration:none;color:inherit;display:block;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.12)}
+
+.card img{width:100%;height:210px;object-fit:cover;display:block}
+.card-content{padding:1.3rem 1.5rem 1.5rem}
+.card-cat{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#4f6b4f;font-weight:600;margin-bottom:.4rem}
+.card h3{font-family:"Playfair Display",serif;font-size:1.2rem;color:#2f3d2f;margin-bottom:.4rem;line-height:1.3}
+.card p{font-size:.85rem;color:#888;line-height:1.65;font-weight:300}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.8rem;border-top:1px solid #f0ece5}
+.card-leitura{font-size:.75rem;color:#aaa}
+.card-link{font-size:.78rem;font-weight:600;color:#4f6b4f;text-decoration:none}
+
+/* card destaque (maior) */
+.card-featured{grid-column:1/-1}
+.card-featured img{height:320px}
+
+/* ── BARRA DE SERVIÇOS ── */
+.servicos{background:#2f3d2f;padding:0 40px}
+.servicos-inner{
+  max-width:1100px;margin:auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.sv{
+  display:flex;align-items:center;gap:12px;
+  padding:1.5rem 1rem;
+  border-right:1px solid rgba(255,255,255,.1);
+  cursor:pointer;transition:background .2s;
+  text-decoration:none;
+}
+.sv:last-child{border-right:none}
+.sv:hover{background:rgba(255,255,255,.06)}
+.sv-icon{font-size:1.3rem;flex-shrink:0}
+.sv-titulo{font-size:.85rem;font-weight:600;color:white}
+.sv-sub{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:2px}
+
+/* ── MAPAS ── */
+.mapas-bg{background:#eee8df;padding:80px 40px}
+.mapas-inner{max-width:1100px;margin:auto}
+.mapas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.mapa-card{background:white;border-radius:14px;overflow:hidden;transition:.3s;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.mapa-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.mapa-img{width:100%;height:150px;object-fit:cover;display:block}
+.mapa-img-ph{width:100%;height:150px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative}
+.badge{position:absolute;top:10px;right:10px;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:30px;letter-spacing:.04em}
+.badge-g{background:#4f6b4f;color:white}
+.badge-p{background:#8B5E3C;color:white}
+.mapa-body{padding:1.1rem 1.2rem 1.3rem}
+.mapa-dest{font-family:"Playfair Display",serif;font-size:1.05rem;color:#2f3d2f;margin-bottom:.25rem}
+.mapa-desc{font-size:.8rem;color:#888;line-height:1.6;margin-bottom:.9rem;font-weight:300}
+.btn-dl{display:inline-flex;align-items:center;gap:6px;background:#f5f1ea;color:#2f3d2f;padding:.45rem .85rem;border-radius:8px;font-size:.78rem;font-weight:600;border:1px solid #ddd6cc;transition:all .2s;cursor:pointer;text-decoration:none}
+.btn-dl:hover{background:#4f6b4f;color:white;border-color:#4f6b4f}
+
+/* ── CONSULTORIA ── */
+.consultoria{background:#2f3d2f;padding:80px 40px}
+.consultoria-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.c-tag{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#a8c5a0;font-weight:600;margin-bottom:.6rem}
+.consultoria h2{font-family:"Playfair Display",serif;font-size:2.2rem;color:#f5f1ea;line-height:1.2;margin-bottom:.9rem}
+.consultoria>div>p,.consultoria-left>p{font-size:.92rem;color:rgba(245,241,234,.6);line-height:1.85;font-weight:300;margin-bottom:1.4rem}
+.pacotes{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.5rem}
+.pacote{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border-radius:10px;padding:.9rem 1.1rem;border:1px solid rgba(255,255,255,.1)}
+.pacote-nome{font-size:.88rem;font-weight:600;color:#f5f1ea}
+.pacote-desc{font-size:.74rem;color:rgba(245,241,234,.45);margin-top:2px}
+.pacote-preco{margin-left:auto;font-family:"Playfair Display",serif;font-size:1.1rem;color:#a8c5a0;white-space:nowrap}
+.ctas-col{display:flex;flex-direction:column;gap:.7rem}
+.btn-verde{background:#4f6b4f;color:white;padding:.82rem 1.8rem;border-radius:30px;text-decoration:none;font-size:.88rem;font-weight:600;text-align:center;display:block;transition:background .2s}
+.btn-verde:hover{background:#3a5039}
+.btn-wpp{display:flex;align-items:center;justify-content:center;gap:9px;background:#25D366;color:white;padding:.82rem 1.8rem;border-radius:30px;text-decoration:none;font-size:.88rem;font-weight:600;transition:background .2s}
+.btn-wpp:hover{background:#1ebe5d}
+.depos{display:flex;flex-direction:column;gap:.9rem}
+.depo{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.2rem}
+.depo-texto{font-size:.84rem;color:rgba(245,241,234,.72);line-height:1.75;font-weight:300;font-style:italic;margin-bottom:.75rem}
+.depo-autor{display:flex;align-items:center;gap:9px}
+.depo-av{width:32px;height:32px;border-radius:50%;background:#4f6b4f;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600;color:white;flex-shrink:0}
+.depo-nome{font-size:.8rem;font-weight:600;color:rgba(245,241,234,.9)}
+.depo-dest{font-size:.7rem;color:rgba(245,241,234,.38)}
+.estrelas{font-size:.7rem;color:#F5B942;margin-left:auto}
+
+/* ── CONTATO ── */
+.contato-section{padding:80px 40px;max-width:700px;margin:auto}
+.contato-section .section-title{text-align:center;margin-bottom:.5rem}
+.contato-section .section-tag{text-align:center;display:block;margin-bottom:.5rem}
+.contato-section>p{text-align:center;color:#888;font-size:.92rem;font-weight:300;line-height:1.7;margin-bottom:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.fg{margin-bottom:.9rem}
+.fg label{display:block;font-size:.72rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem}
+.fg input,.fg select,.fg textarea{
+  width:100%;padding:.8rem 1rem;
+  border:1.5px solid #e0d8cc;border-radius:10px;
+  font-family:Poppins,sans-serif;font-size:.9rem;color:#2d2d2d;
+  background:white;outline:none;transition:border-color .2s;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#4f6b4f}
+.fg textarea{resize:vertical;min-height:90px}
+.btn-submit{
+  width:100%;background:#4f6b4f;color:white;
+  border:none;padding:.95rem;border-radius:30px;
+  font-family:Poppins,sans-serif;font-size:.92rem;font-weight:600;
+  cursor:pointer;transition:all .25s;
+}
+.btn-submit:hover{background:#2f3d2f;transform:translateY(-1px)}
+.btn-wz{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;background:#25D366;color:white;
+  border:none;padding:.82rem;border-radius:30px;
+  font-family:Poppins,sans-serif;font-size:.88rem;font-weight:600;
+  cursor:pointer;text-decoration:none;transition:background .2s;
+  margin-top:.6rem;
+}
+.btn-wz:hover{background:#1ebe5d}
+
+/* ── CTA BANNER ── */
+.cta-banner{
+  background:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80') center/cover;
+  position:relative;text-align:center;padding:100px 40px;color:white;
+}
+.cta-banner::before{content:'';position:absolute;inset:0;background:rgba(20,35,20,.72)}
+.cta-banner>*{position:relative;z-index:1}
+.cta-banner h2{font-family:"Playfair Display",serif;font-size:2.8rem;margin-bottom:.8rem}
+.cta-banner p{font-size:1rem;font-weight:300;color:rgba(255,255,255,.8);margin-bottom:2rem}
+
+/* ── FOOTER ── */
+footer{background:#1e2a1e;color:white;padding:3rem 40px 2rem}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;max-width:1100px;margin:0 auto 2rem}
+.footer-logo{font-family:"Playfair Display",serif;font-size:1.05rem;color:#f5f1ea;margin-bottom:.6rem}
+.footer-logo em{font-style:italic;color:#a8c5a0}
+.footer-desc{font-size:.78rem;color:rgba(255,255,255,.3);line-height:1.75;font-weight:300}
+.fc-title{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:#a8c5a0;font-weight:600;margin-bottom:.8rem}
+.fc a{display:block;font-size:.78rem;color:rgba(255,255,255,.38);text-decoration:none;margin-bottom:.35rem;transition:color .2s}
+.fc a:hover{color:#a8c5a0}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.4rem;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:auto}
+.footer-copy{font-size:.74rem;color:rgba(255,255,255,.25)}
+.footer-redes{display:flex;gap:.9rem}
+.footer-redes a{font-size:.74rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}
+.footer-redes a:hover{color:#a8c5a0}
+
+/* ── ANIMS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  header{padding:0 20px}
+  nav a:not(.nav-cta){display:none}
+  .hero-content{padding:0 24px 60px}
+  .hero h1{font-size:2.6rem}
+  .hero-stats{display:none}
+  .sobre{grid-template-columns:1fr}
+  .sobre-img{min-height:220px}
+  .sobre-content{padding:2rem}
+  .secao{padding:50px 20px}
+  .servicos{padding:0 20px}
+  .servicos-inner{grid-template-columns:1fr 1fr}
+  .sv{border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
+  .mapas-bg{padding:50px 20px}
+  .mapas-grid{grid-template-columns:1fr}
+  .consultoria{padding:50px 20px}
+  .consultoria-inner{grid-template-columns:1fr;gap:2.5rem}
+  .contato-section{padding:50px 20px}
+  .form-row{grid-template-columns:1fr}
+  footer{padding:2rem 20px}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .footer-bottom{flex-direction:column;gap:.8rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <a href="#" class="logo">🌍 Mundo em Duas Mochilas</a>
+  <nav>
+    <a href="#destinos">Destinos</a>
+    <a href="#mapas">Mapas</a>
+    <a href="#consultoria">Consultoria</a>
+    <a href="#contato">Contato</a>
+    <a href="https://instagram.com/mundoemduasmochilas" class="nav-cta" target="_blank">Instagram</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">Blog de viagem · Desde 2022</span>
+    <h1>Mundo em<br><em>Duas Mochilas</em></h1>
+    <p>Roteiros completos, dicas reais e histórias de quem vive viajando com uma mochila nas costas.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#destinos">Ver Destinos</a>
+      <a class="btn btn-secondary" href="#consultoria">Pedir Roteiro</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hs"><span class="hs-num">38+</span><span class="hs-label">Países</span></div>
+    <div class="hs"><span class="hs-num">120+</span><span class="hs-label">Roteiros</span></div>
+    <div class="hs"><span class="hs-num">50k</span><span class="hs-label">Seguidores</span></div>
+  </div>
+</section>
+
+<!-- BARRA SERVIÇOS -->
+<div class="servicos">
+  <div class="servicos-inner">
+    <a href="#mapas" class="sv"><span class="sv-icon">🗺️</span><div><div class="sv-titulo">Mapas offline</div><div class="sv-sub">Download gratuito</div></div></a>
+    <a href="#consultoria" class="sv"><span class="sv-icon">📋</span><div><div class="sv-titulo">Roteiro personalizado</div><div class="sv-sub">A partir de R$ 149</div></div></a>
+    <a href="https://instagram.com/mundoemduasmochilas" target="_blank" class="sv"><span class="sv-icon">📸</span><div><div class="sv-titulo">Instagram</div><div class="sv-sub">@mundoemduasmochilas</div></div></a>
+    <a href="https://wa.me/5531900000000" target="_blank" class="sv"><span class="sv-icon">💬</span><div><div class="sv-titulo">Grupo no WhatsApp</div><div class="sv-sub">Comunidade de viajantes</div></div></a>
+  </div>
+</div>
+
+<!-- QUEM SOMOS -->
+<div style="max-width:1100px;margin:80px auto;padding:0 40px">
+  <div class="sobre">
+    <div class="sobre-img"></div>
+    <div class="sobre-content">
+      <span class="section-tag">Quem somos</span>
+      <h2 class="section-title">Dois nômades, uma mochila cada.</h2>
+      <p>Somos um casal viajando o mundo com mochila nas costas, compartilhando roteiros reais, custos e dicas práticas de quem vive isso no dia a dia.</p>
+      <p>Começamos em 2022 com muito medo e pouco dinheiro. Hoje já foram 38 países — e aprendemos que viajar não precisa ser caro, precisa ser planejado.</p>
+      <div class="sobre-links">
+        <a href="https://instagram.com/mundoemduasmochilas" class="rede rede-ig" target="_blank">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          @mundoemduasmochilas
+        </a>
+        <a href="https://wa.me/5531900000000" class="rede rede-wpp" target="_blank">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DESTINOS -->
+<section class="secao" id="destinos">
+  <div class="secao-header">
+    <div>
+      <span class="section-tag">Roteiros & destinos</span>
+      <h2 class="section-title">Destinos em Destaque</h2>
+    </div>
+    <a href="#" class="ver-todos">Ver todos →</a>
+  </div>
+  <div class="grid">
+
+    <a href="#" class="card card-featured">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80" alt="Montanhas">
+      <div class="card-content">
+        <p class="card-cat">América do Sul · 14 dias</p>
+        <h3>Patagônia: trilhas, gelo e fim do mundo</h3>
+        <p>Roteiro completo por Argentina e Chile, com Torres del Paine, El Chaltén e Ushuaia. Tudo que você precisa saber antes de ir.</p>
+        <div class="card-footer">
+          <span class="card-leitura">20 min de leitura</span>
+          <span class="card-link">Ler roteiro →</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Chapada Diamantina">
+      <div class="card-content">
+        <p class="card-cat">Brasil · 7 dias</p>
+        <h3>Chapada Diamantina</h3>
+        <p>Roteiro completo de 7 dias com trilhas, cachoeiras e onde se hospedar.</p>
+        <div class="card-footer">
+          <span class="card-leitura">14 min</span>
+          <span class="card-link">Ler →</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <img src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=600&q=80" alt="Fernando de Noronha">
+      <div class="card-content">
+        <p class="card-cat">Brasil · 5 dias</p>
+        <h3>Fernando de Noronha</h3>
+        <p>Guia completo com custos reais, como chegar e o que fazer em cada dia.</p>
+        <div class="card-footer">
+          <span class="card-leitura">12 min</span>
+          <span class="card-link">Ler →</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=600&q=80" alt="Lençóis Maranhenses">
+      <div class="card-content">
+        <p class="card-cat">Brasil · 4 dias</p>
+        <h3>Lençóis Maranhenses</h3>
+        <p>O destino mais surreal do Brasil. Quando ir, como chegar e onde ficar.</p>
+        <div class="card-footer">
+          <span class="card-leitura">10 min</span>
+          <span class="card-link">Ler →</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- MAPAS -->
+<div class="mapas-bg" id="mapas">
+  <div class="mapas-inner">
+    <div class="secao-header">
+      <div>
+        <span class="section-tag">Navegue sem internet</span>
+        <h2 class="section-title">Links úteis & Mapas</h2>
+      </div>
+      <a href="#" class="ver-todos">Ver todos →</a>
+    </div>
+    <div class="mapas-grid">
+      <div class="mapa-card">
+        <div class="mapa-img-ph" style="background:#c4956a"><span class="badge badge-g">Grátis</span>🗺️</div>
+        <div class="mapa-body">
+          <h3 class="mapa-dest">Mapa Chile</h3>
+          <p class="mapa-desc">Rota completa pelo Chile com pontos marcados, transportes e dicas de hospedagem.</p>
+          <a href="#" class="btn-dl">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar mapa
+          </a>
+        </div>
+      </div>
+      <div class="mapa-card">
+        <div class="mapa-img-ph" style="background:#7a9e74"><span class="badge badge-g">Grátis</span>🗺️</div>
+        <div class="mapa-body">
+          <h3 class="mapa-dest">Mapa Nordeste</h3>
+          <p class="mapa-desc">Rota pelo Nordeste brasileiro com praias, cidades e os melhores restaurantes locais.</p>
+          <a href="#" class="btn-dl">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar mapa
+          </a>
+        </div>
+      </div>
+      <div class="mapa-card">
+        <div class="mapa-img-ph" style="background:#8b5e3c"><span class="badge badge-p">Premium</span>🗺️</div>
+        <div class="mapa-body">
+          <h3 class="mapa-dest">Patagônia Completa</h3>
+          <p class="mapa-desc">Argentina e Chile. Trilhas, ônibus, acampamentos e dicas de clima por mês.</p>
+          <a href="#" class="btn-dl">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar mapa
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONSULTORIA + DEPOIMENTOS -->
+<section class="consultoria" id="consultoria">
+  <div class="consultoria-inner">
+    <div class="consultoria-left">
+      <p class="c-tag">Serviço personalizado</p>
+      <h2>Monte seu roteiro com a gente.</h2>
+      <p>Diga o destino, o tempo disponível e o orçamento. A gente entrega um roteiro dia a dia completo em até 48h.</p>
+      <div class="pacotes">
+        <div class="pacote"><div><div class="pacote-nome">Roteiro Express</div><div class="pacote-desc">1 destino · até 10 dias · entrega em 48h</div></div><div class="pacote-preco">R$ 149</div></div>
+        <div class="pacote"><div><div class="pacote-nome">Roteiro Completo</div><div class="pacote-desc">Múltiplos destinos · revisões ilimitadas</div></div><div class="pacote-preco">R$ 299</div></div>
+        <div class="pacote"><div><div class="pacote-nome">Lua de Mel / Grupos</div><div class="pacote-desc">Personalizado · consultoria por vídeo</div></div><div class="pacote-preco">R$ 499</div></div>
+      </div>
+      <div class="ctas-col">
+        <a href="#contato" class="btn-verde">Solicitar roteiro personalizado</a>
+        <a href="https://wa.me/5531900000000" class="btn-wpp" target="_blank">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Entrar no grupo do WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="depos">
+      <div class="depo"><p class="depo-texto">"Nunca tinha viajado pra fora e o roteiro deles foi perfeito — dia a dia, tudo certinho. Economizei muito tempo e dinheiro."</p><div class="depo-autor"><div class="depo-av">JS</div><div><div class="depo-nome">Juliana S.</div><div class="depo-dest">Portugal · 12 dias</div></div><div class="estrelas">★★★★★</div></div></div>
+      <div class="depo"><p class="depo-texto">"Já tinha viajado bastante mas nunca com mochila. Eles me ensinaram o que levar, como me locomover e mandaram o mapa offline. Incrível."</p><div class="depo-autor"><div class="depo-av">RM</div><div><div class="depo-nome">Ricardo M.</div><div class="depo-dest">Sudeste Asiático · 30 dias</div></div><div class="estrelas">★★★★★</div></div></div>
+      <div class="depo"><p class="depo-texto">"Fiz o roteiro de lua de mel com eles. Cada detalhe foi pensado com carinho. Foi a viagem da nossa vida."</p><div class="depo-autor"><div class="depo-av">CP</div><div><div class="depo-nome">Camila & Pedro</div><div class="depo-dest">Balcãs · 15 dias</div></div><div class="estrelas">★★★★★</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato-section" id="contato">
+  <span class="section-tag" style="text-align:center;display:block">Fale com a gente</span>
+  <h2 class="section-title" style="text-align:center;margin-bottom:.5rem">Monte seu roteiro</h2>
+  <p style="text-align:center;color:#888;font-size:.92rem;font-weight:300;line-height:1.7;margin-bottom:2rem">Conta o destino, o tempo disponível e o orçamento.<br>A gente monta tudo e entrega em até 48h.</p>
+  <form onsubmit="enviar(event)">
+    <div class="form-row">
+      <div class="fg"><label>Nome</label><input type="text" placeholder="Seu nome" required></div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="seu@email.com" required></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Destino</label><select><option value="">Selecione...</option><option>Europa</option><option>Ásia</option><option>América do Sul</option><option>Brasil</option><option>Outros</option></select></div>
+      <div class="fg"><label>Orçamento</label><select><option value="">Selecione...</option><option>Até R$ 5.000</option><option>R$ 5k – R$ 10k</option><option>R$ 10k – R$ 20k</option><option>Acima de R$ 20k</option></select></div>
+    </div>
+    <div class="fg"><label>Mensagem</label><textarea placeholder="Quantos dias, estilo de viagem, viaja sozinho ou em grupo..."></textarea></div>
+    <button type="submit" class="btn-submit">Enviar mensagem</button>
+  </form>
+  <a href="https://wa.me/5531900000000" class="btn-wz" target="_blank">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar pelo WhatsApp
+  </a>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Quer um roteiro personalizado?</h2>
+  <p>Montamos viagens sob medida pra você, com orçamento real e dicas exclusivas.</p>
+  <a class="btn btn-primary" href="#contato">Solicitar agora</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🌍 Mundo em <em>Duas Mochilas</em></div>
+      <p class="footer-desc">Blog de viagem de um casal brasileiro que acredita que o mundo cabe em duas mochilas — e num bom planejamento.</p>
+    </div>
+    <div class="fc"><div class="fc-title">Destinos</div><a href="#">Brasil</a><a href="#">América do Sul</a><a href="#">Europa</a><a href="#">Ásia</a></div>
+    <div class="fc"><div class="fc-title">Conteúdo</div><a href="#">Blog</a><a href="#">Mapas</a><a href="#">Links úteis</a><a href="#">Dicas</a></div>
+    <div class="fc"><div class="fc-title">Contato</div><a href="#">Roteiro personalizado</a><a href="#">Grupo WhatsApp</a><a href="#">Instagram</a><a href="#">Email</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Mundo em Duas Mochilas · Feito com amor e passagens de avião ✈</span>
+    <div class="footer-redes">
+      <a href="https://instagram.com/mundoemduasmochilas" target="_blank">Instagram</a>
+      <a href="https://wa.me/5531900000000" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 30)
+})
+function enviar(e){
+  e.preventDefault()
+  const b = e.target.querySelector('.btn-submit')
+  b.textContent = 'Enviado! ✓'
+  b.style.background = '#2f3d2f'
+  setTimeout(()=>{b.textContent='Enviar mensagem';b.style.background='';e.target.reset()}, 3000)
+}
+</script>
+</body>
+</html>
