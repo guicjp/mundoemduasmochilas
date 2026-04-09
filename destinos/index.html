@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Destinos | Mundo em Duas Mochilas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,sans-serif;background:#f5f1ea;color:#2d2d2d}
+header{position:fixed;top:0;width:100%;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);padding:0 40px;height:64px;display:flex;justify-content:space-between;align-items:center;z-index:1000;border-bottom:1px solid #e8e0d4}
+.logo{font-family:"Playfair Display",serif;font-weight:700;font-size:1.1rem;color:#2f3d2f;text-decoration:none}
+nav{display:flex;align-items:center;gap:1rem}
+nav a{font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;color:#555;text-decoration:none;font-weight:500;transition:color .2s}
+nav a:hover{color:#4f6b4f}
+.hero{min-height:40vh;background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;color:white;position:relative;padding:0 20px;margin-top:64px}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(20,30,20,.86),rgba(20,30,20,.2));}
+.hero-content{position:relative;z-index:1;max-width:780px}
+.hero h1{font-family:"Playfair Display",serif;font-size:3rem;line-height:1.1;margin-bottom:1rem}
+.hero p{font-size:1rem;font-weight:300;line-height:1.8;color:rgba(255,255,255,.9)}
+.secao{padding:80px 40px;max-width:1100px;margin:auto}
+.section-title{font-family:"Playfair Display",serif;font-size:2.3rem;color:#2f3d2f;margin-bottom:.8rem}
+.section-tag{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:#4f6b4f;font-weight:600;margin-bottom:.7rem;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08);text-decoration:none;color:inherit;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.12)}
+.card img{width:100%;height:200px;object-fit:cover;display:block}
+.card-content{padding:1.4rem}
+.card-cat{font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:#4f6b4f;font-weight:600;margin-bottom:.5rem;display:block}
+.card h3{font-family:"Playfair Display",serif;font-size:1.3rem;color:#2f3d2f;margin-bottom:.6rem;line-height:1.25}
+.card p{font-size:.95rem;color:#616161;line-height:1.75;font-weight:300}
+.card-footer{margin-top:1.2rem;display:flex;align-items:center;justify-content:space-between;font-size:.85rem;color:#8b8b8b}
+.btn-primary{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 1.5rem;border-radius:30px;background:#4f6b4f;color:white;text-decoration:none;font-weight:600;font-size:.88rem;transition:background .25s}
+.btn-primary:hover{background:#3a5039}
+footer{padding:2rem 40px;text-align:center;color:#777;font-size:.88rem}
+@media(max-width:768px){header{padding:0 20px} .hero{min-height:32vh} .hero h1{font-size:2.1rem} .secao{padding:50px 20px} .grid{gap:18px}}
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">🌍 Mundo em Duas Mochilas</a>
+  <nav>
+    <a href="../index.html">Início</a>
+    <a href="#">Destinos</a>
+    <a href="../index.html#mapas">Mapas</a>
+    <a href="../index.html#contato">Contato</a>
+  </nav>
+</header>
+<section class="hero">
+  <div class="hero-content">
+    <span class="section-tag">Roteiros & destinos</span>
+    <h1>Explore destinos por continente e viagem.</h1>
+    <p>Guia completo para cada roteiro, com dicas de hospedagem, transporte e o melhor que cada lugar tem a oferecer.</p>
+  </div>
+</section>
+<section class="secao">
+  <span class="section-tag">Destinos em destaque</span>
+  <h2 class="section-title">Escolha seu próximo destino</h2>
+  <div class="grid">
+    <a href="peru/lagoa-humantay.html" class="card">
+      <img src="../imagens/destinos/lagoa-humantay.jpg" alt="Lagoa Humantay">
+      <div class="card-content">
+        <span class="card-cat">Peru · Trilha de 1 dia</span>
+        <h3>Lagoa Humantay</h3>
+        <p>Roteiro completo para chegar ao lago azul-turquesa nos arredores de Cusco.</p>
+        <div class="card-footer"><span>12 min</span><span>Ler roteiro →</span></div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Chapada Diamantina">
+      <div class="card-content">
+        <span class="card-cat">Brasil · 7 dias</span>
+        <h3>Chapada Diamantina</h3>
+        <p>Trilhas, cachoeiras e dicas de hospedagem para um roteiro completo.</p>
+        <div class="card-footer"><span>14 min</span><span>Em breve</span></div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <img src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=800&q=80" alt="Fernando de Noronha">
+      <div class="card-content">
+        <span class="card-cat">Brasil · 5 dias</span>
+        <h3>Fernando de Noronha</h3>
+        <p>Guia para viver o melhor do arquipélago com custos reais e dicas úteis.</p>
+        <div class="card-footer"><span>12 min</span><span>Em breve</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+<footer>© 2026 Mundo em Duas Mochilas</footer>
+</body>
+</html>
